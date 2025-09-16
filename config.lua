@@ -1,5 +1,7 @@
 Config = {}
 
+Config.KillerHandler = "ESX" -- ESX or txAdmin
+
 Config.PlayerKillCooldown = 2500 -- in milliseconds
 Config.DistanceCheck = {
     -- Enabling this creates a distance check between killer and killed player

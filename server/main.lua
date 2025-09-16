@@ -9,11 +9,7 @@ local function givePlayerReward(client)
     end
 end
 
-RegisterNetEvent("esx:onPlayerDeath", function (data)
-    local client = source
-    if not data then return end
-    if not data.killerServerId or not data.killedByPlayer then return end
-    if client == data.killerServerId then return end
+local function handlePlayerDeath(killed, killer)
     if not Config.ItemRewards or next(Config.ItemRewards) == nil then return end
     if Config.PlayerKillCooldown then
         if playerKillCooldown[client] then 
@@ -30,17 +26,35 @@ RegisterNetEvent("esx:onPlayerDeath", function (data)
 
     if Config.DistanceCheck and Config.DistanceCheck.enabled then
         local killedCoords = GetEntityCoords(GetPlayerPed(client))
-        local killerCoords = GetEntityCoords(GetPlayerPed(data.killerServerId))
+        local killerCoords = GetEntityCoords(GetPlayerPed(killer))
         local distance = #(killedCoords - killerCoords)
         if distance > Config.DistanceCheck.maxDistance then
             return print("nlmt_killreward: Distance check failed for player ID " .. client .. " (Distance: " .. distance .. ")")
         end
     end
 
-    givePlayerReward(data.killerServerId)
-end)
+    givePlayerReward(killer)
+end
 
 AddEventHandler('playerDropped', function(reason)
     local client = source
     playerKillCooldown[client] = nil
 end)
+
+if Config.KillerHandler == "ESX" then
+    RegisterNetEvent("esx:onPlayerDeath", function (data)
+        local client = source
+        if not data then return end
+        if not data.killerServerId or not data.killedByPlayer then return end
+        if client == data.killerServerId then return end
+
+        handlePlayerDeath(client, data.killerServerId)
+    end)
+elseif Config.KillerHandler == "txAdmin" then
+    RegisterNetEvent("txsv:logger:deathEvent", function (killer)
+        local client = source
+        if not killer or killer == 0 then return end
+        if client == killer then return end
+        handlePlayerDeath(client, killer)
+    end)
+end
