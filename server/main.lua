@@ -12,24 +12,24 @@ end
 local function handlePlayerDeath(killed, killer)
     if not Config.ItemRewards or next(Config.ItemRewards) == nil then return end
     if Config.PlayerKillCooldown then
-        if playerKillCooldown[client] then 
-            return print("nlmt_killreward: Player kill reward cooldown active for player ID " .. client)
+        if playerKillCooldown[killed] then 
+            return print("nlmt_killreward: Player kill reward cooldown active for player ID " .. killed)
         end
 
-        playerKillCooldown[client] = true
+        playerKillCooldown[killed] = true
 
         SetTimeout(Config.PlayerKillCooldown, function ()
-            if not playerKillCooldown[client] then return end
-            playerKillCooldown[client] = nil
+            if not playerKillCooldown[killed] then return end
+            playerKillCooldown[killed] = nil
         end)
     end
 
     if Config.DistanceCheck and Config.DistanceCheck.enabled then
-        local killedCoords = GetEntityCoords(GetPlayerPed(client))
+        local killedCoords = GetEntityCoords(GetPlayerPed(killed))
         local killerCoords = GetEntityCoords(GetPlayerPed(killer))
         local distance = #(killedCoords - killerCoords)
         if distance > Config.DistanceCheck.maxDistance then
-            return print("nlmt_killreward: Distance check failed for player ID " .. client .. " (Distance: " .. distance .. ")")
+            return print("nlmt_killreward: Distance check failed for player ID " .. killed .. " (Distance: " .. distance .. ")")
         end
     end
 
