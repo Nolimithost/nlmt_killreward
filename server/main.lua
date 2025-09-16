@@ -15,11 +15,18 @@ RegisterNetEvent("esx:onPlayerDeath", function (data)
     if not data.killerServerId or not data.killedByPlayer then return end
     if client == data.killerServerId then return end
     if not Config.ItemRewards or next(Config.ItemRewards) == nil then return end
-    if playerKillCooldown[client] then 
-        return print("nlmt_killreward: Player kill reward cooldown active for player ID " .. client)
-    end
+    if Config.PlayerKillCooldown then
+        if playerKillCooldown[client] then 
+            return print("nlmt_killreward: Player kill reward cooldown active for player ID " .. client)
+        end
 
-    playerKillCooldown[client] = true
+        playerKillCooldown[client] = true
+
+        SetTimeout(Config.PlayerKillCooldown, function ()
+            if not playerKillCooldown[client] then return end
+            playerKillCooldown[client] = nil
+        end)
+    end
 
     if Config.DistanceCheck and Config.DistanceCheck.enabled then
         local killedCoords = GetEntityCoords(GetPlayerPed(client))
@@ -31,11 +38,6 @@ RegisterNetEvent("esx:onPlayerDeath", function (data)
     end
 
     givePlayerReward(data.killerServerId)
-
-    SetTimeout(Config.PlayerKillCooldown, function ()
-        if not playerKillCooldown[client] then return end
-        playerKillCooldown[client] = nil
-    end)
 end)
 
 AddEventHandler('playerDropped', function(reason)
