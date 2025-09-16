@@ -6,7 +6,7 @@
 
 This script is created and maintained by **NolimitHost**. Use code **WELCOME** at checkout to receive **10% off** your first month of FiveM hosting!
 
-* **Website:** [https://nolimitHost.cc/fivem](https://nolimithost.cc/fivem-hosting.html)
+* **Website:** [https://nolimithost.cc/fivem-hosting](https://nolimithost.cc/fivem-hosting.html)
 * **Discord:** [discord.nolimithost.cc](https://discord.nolimithost.cc)
 
 **Features**
