@@ -7,7 +7,7 @@ It now supports **ESX** or **txAdmin events**, with rewards handled via **ox_inv
 
 This script is created and maintained by **NolimitHost**. Use code **WELCOME** at checkout to receive **10% off** your first month of FiveM hosting!
 
-* **Website:** [https://nolimithost.cc/fivem-hosting](https://nolimithost.cc/fivem-hosting.html)  
+* **Website:** [https://nolimithost.cc/fivem-hosting](https://nolimithost.cc/games/fivem-hosting)  
 * **Discord:** [discord.nolimithost.cc](https://discord.nolimithost.cc)
 
 **Features**
